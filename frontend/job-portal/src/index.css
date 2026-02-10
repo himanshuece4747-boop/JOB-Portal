@@ -1,20 +1,195 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@100..900&display=swap');
 @import "tailwindcss";
 
-@theme{
-  --font-display:"Urbanist",sans-serif;
-  --breakpoint-3xl:1920px;
-  --color-primary:#00A7F3;
+/* =============================
+   LOGIN PAGE ONLY (SCOPED)
+   ============================= */
 
+.page {
+  width: 380px;
+  padding: 2.5rem;
+
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.25);
+
+  font-family: "Urbanist", sans-serif;
 }
 
-@layer base{
-  html{
-    font-family: var(--font-display);
+/* Centering ONLY login page */
+.page-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1d2671, #c33764);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* =============================
+   TEXT
+   ============================= */
+
+.page h2 {
+  text-align: center;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+.page p {
+  text-align: center;
+  margin-bottom: 1.8rem;
+  color: #ffffff;
+}
+
+/* =============================
+   INPUTS
+   ============================= */
+
+.page input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 1rem;
+
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 10px;
+
+  outline: none;
+  font-size: 0.95rem;
+}
+
+.page input::placeholder {
+  color: #555;
+}
+
+.page input:focus {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(29, 38, 113, 0.7);
+}
+
+/* =============================
+   BUTTON
+   ============================= */
+
+.page button {
+  width: 100%;
+  padding: 12px;
+
+  border-radius: 10px;
+  border: none;
+
+  background: linear-gradient(135deg, #1d2671, #3a4bdc);
+  color: white;
+
+  font-size: 1rem;
+  cursor: pointer;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.page button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* =============================
+   LINKS
+   ============================= */
+
+.link {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.link a {
+  color: #ffeff4;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* =============================
+   ROLE SELECTOR
+   ============================= */
+
+.role-group {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 1.5rem 0;
+}
+
+.role-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #ffffff;
+}
+
+/* Custom radio */
+.role-option input[type="radio"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+}
+
+.role-option input[type="radio"]::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+
+  background: #ffffff;
+  border-radius: 50%;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.2s ease;
+}
+
+.role-option input[type="radio"]:checked::before {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* =============================
+   ANIMATIONS
+   ============================= */
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
   }
 
-  body{
-    background-color: #f7fafe;
-    overflow-x: hidden;
+  25% {
+    transform: translateX(-6px);
   }
+
+  50% {
+    transform: translateX(6px);
+  }
+
+  75% {
+    transform: translateX(-6px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.error {
+  animation: shake 0.4s ease;
 }
