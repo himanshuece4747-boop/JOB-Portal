@@ -6,7 +6,7 @@ import{
 
 } from "react-router-dom"
 import { Toaster } from "react-hot-toast"
-import LandingPage from "./LandingPage/components/LandingPage"
+import LandingPage from "./LandingPage/LandingPage"
 import SignUp from "./pages/Auth/SignUp"
 import Login from "./pages/Auth/Login"
 import JobSeekerDashboards from "./pages/JobSeeker/JobSeekerDashboards"
