@@ -8,10 +8,10 @@ import { Briefcase } from 'lucide-react'
 const LandingPage = () => {
   return (
     <div className='min-h-screen mb-[100vh]'>
-      <Header />
+      {<Header /> }
       <Hero />
-      <Features/>
-      <Analytics />
+      {<Features/> }
+      {<Analytics /> }
     </div>
   )
 }
