@@ -1,4 +1,4 @@
-import { Bookmark, Building, Building2, Calender, MapPin } from "lucide-react";
+import { Bookmark, Building, Building2, Calendar, MapPin } from "lucide-react";
 import moment from "moment";
 import { useAuth } from "../../context/AuthContext";
 import StatusBadge from "../StatusBadge";
@@ -84,9 +84,9 @@ const JobCard = ({ job, onClick, onToggleSave, onApply, saved, hideApply }) => {
         <div className="flex items-center justify-between text-xs font-medium text-gray-500 mb-5 pb-4 border-b border-gray-100">
             <div className="flex items-center gap-4">
                 <span className="flex items-center gap-1.5">
-                    <Calender className="w-3.5 h-3.5" />
+                    <Calendar className="w-3.5 h-3.5" />
                     {job?.createdAt
-                        ? moment(job.createdAt).format("DD MM YYYY")
+                        ? moment(job.createdAt).format("DD/MM/YYYY")
                         : "N/A"
                     }
                 </span>
@@ -98,23 +98,23 @@ const JobCard = ({ job, onClick, onToggleSave, onApply, saved, hideApply }) => {
             </div>
             {!saved && (
                 <>
-                {job?.applicationStatus ? (
-                        <StatusBadge status={job?.applicationStatus}/>
-                    ):(
+                    {job?.applicationStatus ? (
+                        <StatusBadge status={job?.applicationStatus} />
+                    ) : (
                         !hideApply && (
                             <button
                                 className="bg-linear-to-r from-blue-50 to-blue-50 text-sm text-blue-700 hover:text-white px-6 py-2.5 rounded-xl hover:from-blue-500 hover:to-blue-600 transition-all duration-200 font-semibold transform hover:-translate-y-0.5"
-                                onClick={(e) =>{
+                                onClick={(e) => {
                                     e.stopPropagation();
                                     onApply();
                                 }}
                             >
                                 Apply Now
-                            </button>    
+                            </button>
                         )
                     )}
                 </>
-                    
+
             )}
         </div>
     </div>

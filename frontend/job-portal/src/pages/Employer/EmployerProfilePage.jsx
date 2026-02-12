@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import uploadImage from "../../utils/uploadImage";
 
 import DashboardLayout from "../../components/layout/DashboardLayout";
-import EditProfileDetails from "../../components/profile/EditProfileDetails";
+import EditProfileDetails from "../EditProfileDetails";
 
 const EmployerProfilePage = () => {
   const { user, updateUser } = useAuth();
@@ -67,7 +67,7 @@ const EmployerProfilePage = () => {
       );
 
       if (response.status === 200) {
-        toast.success("Profile Details Updated Successfully!!");
+        toast.success("Profile Details Updated Successfully!");
         setProfileData({ ...formData });
         updateUser({ ...formData });
         setEditMode(false);

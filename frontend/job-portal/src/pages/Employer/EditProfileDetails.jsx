@@ -78,7 +78,7 @@ const EditProfileDetails = ({
 
                     {/* Email (Read-only) */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
                         Email Address
                       </label>
                       <input
@@ -104,7 +104,7 @@ const EditProfileDetails = ({
                           alt="Company Logo"
                           className="w-20 h-20 rounded-lg object-cover border-4 border-gray-200"
                         />
-                        {uploading.logo && (
+                        {uploading?.logo && (
                           <div className="absolute inset-0 bg-black bg-opacity-50 rounded-lg flex items-center justify-center">
                             <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                           </div>
@@ -166,30 +166,31 @@ const EditProfileDetails = ({
                       />
                     </div>
                   </div>
+
+                </div>
+
                 {/* Action Buttons */}
-                  <div className="flex justify-end space-x-4 mt-8 pt-6 border-t">
-                    <button
-                      onClick={handleCancel}
-                      className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors flex items-center space-x-2"
-                    >
-                      <X className="w-4 h-4" />
-                      <span>Cancel</span>
-                    </button>
+                <div className="flex justify-end space-x-4 mt-8 pt-6 border-t">
+                  <button
+                    onClick={handleCancel}
+                    className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors flex items-center space-x-2"
+                  >
+                    <X className="w-4 h-4" />
+                    <span>Cancel</span>
+                  </button>
 
-                    <button
-                      onClick={handleSave}
-                      disabled={saving || uploading.avatar || uploading.logo}
-                      className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
-                    >
-                      {saving ? (
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      ) : (
-                        <Save className="w-4 h-4" />
-                      )}
-                      <span>{saving ? "Saving..." : "Save Changes"}</span>
-                    </button>
-                  </div>
-
+                  <button
+                    onClick={handleSave}
+                    disabled={saving || uploading?.avatar || uploading?.logo}
+                    className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
+                  >
+                    {saving ? (
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    ) : (
+                      <Save className="w-4 h-4" />
+                    )}
+                    <span>{saving ? "Saving..." : "Save Changes"}</span>
+                  </button>
                 </div>
               </div>
             </div>
