@@ -13,6 +13,7 @@ const StatusBadge = ({status}) => {
       className={`px-3 py-1 rounded text-sm font-medium ${
         statusConfig[status] || "bg-gray-100 text-gray-800"
       }`}
+      
     >
       {status}
     </span>    

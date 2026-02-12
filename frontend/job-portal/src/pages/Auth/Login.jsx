@@ -1,124 +1,284 @@
-import { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import {
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
+  AlertCircle,
+  CheckCircle,
+  Loader
+} from 'lucide-react';
+import {validateEmail} from "../../utils/helper";
+import {useAuth} from "../../context/AuthContext";
 
-function Login() {
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-    role: "seeker",
-    workType: "",
+const Login = () => {
+  const { login } = useAuth()
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    rememberMe: false
   });
 
-  const cardRef = useRef(null);
+  const [formState, setFormState] = useState({
+    loading: false,
+    errors: {},
+    showPassword: false,
+    success: false
+  });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+  // Validation
+  const validateEmail = (email) => {
+    if (!email.trim()) return 'Email is required';
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) return 'Please enter a valid email address';
+    return '';
   };
 
-  const handleSubmit = (e) => {
+  const validatePassword = (password) => {
+    if (!password) return 'Password is required';
+    return '';
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+
+    // Clear error properly
+    if (formState.errors[name]) {
+      setFormState(prev => ({
+        ...prev,
+        errors: { ...prev.errors, [name]: '' }
+      }));
+    }
+  };
+
+  const validateForm = () => {
+    const errors = {
+      email: validateEmail(formData.email),
+      password: validatePassword(formData.password)
+    };
+
+    Object.keys(errors).forEach(key => {
+      if (!errors[key]) delete errors[key];
+    });
+
+    setFormState(prev => ({ ...prev, errors }));
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const card = cardRef.current;
-    const allFilled = Object.values(form).every(
-      (v) => v.trim() !== ""
-    );
+    if (!validateForm()) return;
 
-    card.classList.remove("error");
+    setFormState(prev => ({ ...prev, loading: true }));
 
-    if (!allFilled) {
-      card.classList.add("error");
-      setTimeout(() => card.classList.remove("error"), 400);
-      return;
+    try {
+      // Login API integration
+      const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
+        email: formData.email,
+        password: formData.password,
+        rememberMe: formData.rememberMe
+      });
+
+      setFormState(prev => ({
+        ...prev,
+        loading: false,
+        success: true,
+      }));
+
+      const { token, role } = response.data;
+
+      if (token) {
+        login(response.data, token);
+
+        // Redirect based on role
+        setTimeout(() => {
+          window.location.href =
+            role === "employer"
+              ? "/employer-dashboard"
+              : "/find-jobs";
+        }, 2000);
+      }
+      // Redirect based on user role
+      setTimeout(() => {
+        const redirectPath =
+          user.role === 'employer'
+            ? '/employer-dashboard'
+            : '/find-jobs';
+
+        window.location.href = redirectPath;
+      }, 1500);
+
+    } catch (error) {
+      setFormState(prev => ({
+        ...prev,
+        loading: false,
+        errors: {
+          submit:
+            error.response?.data?.message ||
+            'Login failed. Please check your credentials.'
+        }
+      }));
     }
-
-    // Auth logic will be integrated here later
-    console.log("Login payload:", form);
   };
 
-  return (
-    <div className="page-wrapper">
-      <div ref={cardRef} className="page">
-        {/* Tilt animation disabled intentionally — enable if UX approved */}
-        <div
-        // className="tilt-layer"
-        // onMouseMove={(e) => {
-        //   const rect = e.currentTarget.getBoundingClientRect();
-        //   const x = e.clientX - rect.left - rect.width / 2;
-        //   const y = e.clientY - rect.top - rect.height / 2;
-
-        //   e.currentTarget.style.transform =
-        //     `rotateX(${-y / 20}deg) rotateY(${x / 20}deg)`;
-        // }}
-        // onMouseLeave={(e) => {
-        //   e.currentTarget.style.transform =
-        //     "rotateX(0deg) rotateY(0deg)";
-        // }}
+  if (formState.success) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="bg-white p-8 rounded-xl shadow-lg max-w-md w-full text-center"
         >
-          <h2>Welcome Back</h2>
-          <p>Login to continue</p>
+          <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
 
-          <form onSubmit={handleSubmit}>
-            <div className="role-group">
-              <label className="role-option">
-                <input
-                  type="radio"
-                  name="role"
-                  value="seeker"
-                  checked={form.role === "seeker"}
-                  onChange={handleChange}
-                />
-                Job Seeker
-              </label>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            Welcome Back!
+          </h2>
 
-              <label className="role-option">
-                <input
-                  type="radio"
-                  name="role"
-                  value="recruiter"
-                  checked={form.role === "recruiter"}
-                  onChange={handleChange}
-                />
-                Recruiter
-              </label>
+          <p className="text-gray-600 mb-4">
+            You have been successfully logged in.
+          </p>
+
+          <div className="animate-spin w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full mx-auto"></div>
+
+          <p className="text-sm text-gray-500 mt-2">
+            Redirecting to your dashboard...
+          </p>
+        </motion.div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="bg-white p-8 rounded-xl shadow-lg max-w-md w-full"
+      >
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome Back</h2>
+          <p className="text-gray-600">Sign in to your JobPortal account</p>
+        </div>
+
+
+        <form onSubmit={handleSubmit} className='space-y-6'>
+
+          {/* Email */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2"
+            >Email Address</label>
+            <div className='relative'>
+              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"
+              />
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder="Enter your email"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
             </div>
 
-            <input
-              name="email"
-              placeholder="Email"
-              value={form.email}
-              onChange={handleChange}
-            />
-
-            <input
-              name="password"
-              type="password"
-              placeholder="Password"
-              value={form.password}
-              onChange={handleChange}
-            />
-
-            <input
-              name="workType"
-              placeholder={
-                form.role === "seeker"
-                  ? "Type of work you are seeking"
-                  : "Type of work you are providing"
-              }
-              value={form.workType}
-              onChange={handleChange}
-            />
-
-            <button type="submit">Login</button>
-          </form>
-
-          <div className="link">
-            New user? <Link to="/signUp">Register</Link>
+            {formState.errors.email && (
+              <p className="text-red-500 text-sm mt-1 flex items-center"
+              >
+                <AlertCircle className='w-4 h-4 mr-1' />
+                {formState.errors.email}
+              </p>
+            )}
           </div>
-        </div>
-      </div>
+
+          {/* Password */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2"
+            >Password</label>
+            <div className='relative'>
+              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"
+              />
+              <input
+                type={formState.showPassword ? 'text' : 'password'}
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                placeholder="Enter your password"
+                className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <button
+                type="button"
+                onClick={() =>
+                  setFormState(prev => ({
+                    ...prev,
+                    showPassword: !prev.showPassword
+                  }))
+                }
+                className='absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600'
+              >
+                {formState.showPassword ? <EyeOff className='w-5 h-5' /> : <Eye className='w-5 h-5' />}
+              </button>
+            </div>
+
+            {formState.errors.password && (
+              <p className='text-red-500 text-sm mt-1 flex items-center'>
+                <AlertCircle className='w-4 h-4 mr-1' />
+                {formState.errors.password}
+              </p>
+            )}
+          </div>
+
+          {/* Submit Error */}
+          {formState.errors.submit && (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+              <p className="text-red-700 text-sm flex items-center">
+                <AlertCircle className="w-4 h-4 mr-2" />
+                {formState.errors.submit}
+              </p>
+            </div>
+          )}
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={formState.loading}
+            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold flex items-center justify-center gap-2 hover:opacity-90 transition"
+          >
+            {formState.loading ? (
+              <>
+                <Loader className="w-5 h-5 animate-spin" />
+                <span>Signing In...</span>
+              </>
+            ) : (
+              <span>Sign In</span>
+            )}
+          </button>
+
+          {/* Sign Up Link */}
+          <div className="text-center">
+            <p className="text-gray-600">
+              Don't have an account?{' '}
+              <a
+                href="/signup"
+                className="text-blue-600 hover:text-blue-700 font-medium"
+              >
+                Register
+              </a>
+            </p>
+          </div>
+
+
+        </form>
+      </motion.div>
     </div>
   );
-}
+};
 
 export default Login;
