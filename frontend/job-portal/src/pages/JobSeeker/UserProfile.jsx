@@ -19,7 +19,7 @@ const UserProfile = () => {
     });
 
     const [formData, setFormData] = useState({ ...profileData });
-    const [uploading, setUploading] = useState({ avatar: false, logo: false });
+    const [uploading, setUploading] = useState({ avatar: false, resume: false });
     const [saving, setSaving] = useState(false);
 
     const handleInputChange = (field, value) => {
@@ -242,7 +242,7 @@ const UserProfile = () => {
                                     disabled={
                                         saving ||
                                         uploading.avatar ||
-                                        uploading.logo
+                                        uploading.resume
                                     }
                                     className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
                                 >

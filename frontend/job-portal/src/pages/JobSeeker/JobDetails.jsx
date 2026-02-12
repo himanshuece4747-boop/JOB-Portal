@@ -14,7 +14,7 @@ import Navbar from "../../components/layout/Navbar";
 import moment from "moment";
 import StatusBadge from "../../components/StatusBadge";
 import toast from "react-hot-toast";
-
+                          
 const JobDetails = () => {
   const { user } = useAuth();
   const { jobId } = useParams();
@@ -29,7 +29,6 @@ const JobDetails = () => {
           params: { userId: user?._id || null },
         }
       );
-
       setJobDetails(response.data);
     } catch (error) {
       console.error("Error fetching job details:", error);
@@ -47,7 +46,7 @@ const JobDetails = () => {
     } catch (err) {
       console.error("Error:", err);
       const errorMsg = err?.response?.data?.message;
-      toast.error(errorMsg || "something went wrong! Try again later");
+      toast.error(errorMsg || "Something went wrong! Try again later");
     }
   };
   
@@ -56,6 +55,7 @@ const JobDetails = () => {
       getJobDetailsById();
     }
   }, [jobId, user]);
+  
   return (
     <div className="bg-gradient-to-br from-blue-50 via-white to-purple-50">
       <Navbar />
@@ -130,7 +130,7 @@ const JobDetails = () => {
               {/* Content sections */}
               <div className="px-0 pb-8 space-y-8">
                 {/* Salary section */}
-                <div className="relative overflow-hidden bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 p-6 rounded-6xl">
+                <div className="relative overflow-hidden bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 p-6 rounded-xl">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-emerald-400/10 to-teal-400/10 rounded-full translate-y-16 translate-x-16"></div>
                     <div className="relative z-10">
                      <div className="flex items-center justify-between">
@@ -152,13 +152,13 @@ const JobDetails = () => {
                       </div>
                       <div className="flex items-center space-x-2 text-sm text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">
                          <Users className="h-4 w-4"/>
-                         <span>Competetive</span>
+                         <span>Competitive</span>
                       </div>
                    </div>
                   </div>
                 </div>
 
-                {/*job Description*/}
+                {/*job Description */}
                 <div className="space-y-4">
                   <h3 className="text-2xl font-bold text-gray-900 flex items-center space-x-3">
                     <div className="w-1 h-8 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full"></div>
@@ -175,7 +175,7 @@ const JobDetails = () => {
                 <div className="space-y-4">
                   <h3 className="text-2xl font-bold text-gray-900 flex items-center space-x-3">
                     <div className="w-1 h-8 bg-gradient-to-b from-purple-500 to-pink-600 rounded-full"></div>
-                    <span className="">What We're Looking For</span>
+                    <span>What We're Looking For</span>
                   </h3>
                 <div className="bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-100 rounded-xl p-6">
                   <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap ">

@@ -10,7 +10,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import { useEffect, useState } from "react";
 import Navbar from "../../components/layout/Navbar";
-import JobCard from "../../components/JobCard";
+import JobCard from "../../components/Cards/JobCard";
 import toast from "react-hot-toast";
 
 const SavedJobs = () => {
@@ -28,7 +28,7 @@ const SavedJobs = () => {
 
       setSavedJobList(response.data);
     } catch (error) {
-      console.error("Error fetching job details:", error);
+      console.error("Error fetching saved jobs:", error);
     }
   };
 
@@ -98,55 +98,55 @@ const SavedJobs = () => {
                   </button>
                 </div>
               </div>
+            </div>
 
-              {/* Content sections */}
-              <div className="px-0 pb-8 space-y-8">
-                {/* Job Grid */}
-                {savedJobList.length === 0 ? (
-                  <div className="text-center py-16 lg:py-20 bg-white/60 backdrop-blur-xl rounded-2xl border border-white/20">
-                    <div className="text-gray-300 mb-6">
-                      <Bookmark className="w-16 h-16 mx-auto" />
-                    </div>
-
-                    <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-3">
-                      You haven't saved any jobs yet
-                    </h3>
-
-                    <p className="text-gray-600 mb-6">
-                      Start saving jobs that interest you to view them later.
-                    </p>
-
-                    <button
-                      onClick={() => navigate("/find-jobs")}
-                      className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors"
-                    >
-                      Browse Jobs
-                    </button>
+            {/* Content sections */}
+            <div className="px-0 pb-8 space-y-8">
+              {/* Job Grid */}
+              {savedJobList.length === 0 ? (
+                <div className="text-center py-16 lg:py-20 bg-white/60 backdrop-blur-xl rounded-2xl border border-white/20">
+                  <div className="text-gray-300 mb-6">
+                    <Bookmark className="w-16 h-16 mx-auto" />
                   </div>
-                ) : (
-                  <div
-                    className={
-                      viewMode === "grid"
-                        ? "grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-6"
-                        : "space-y-4 lg:space-y-6"
-                    }
+
+                  <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-3">
+                    You haven't saved any jobs yet
+                  </h3>
+
+                  <p className="text-gray-600 mb-6">
+                    Start saving jobs that interest you to view them later.
+                  </p>
+
+                  <button
+                    onClick={() => navigate("/find-jobs")}
+                    className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors"
                   >
-                    {savedJobList.map((savedJob) => (
-                      <JobCard
-                        key={savedJob._id}
-                        job={savedJob?.job}
-                        onClick={() =>
-                          navigate(`/job/${savedJob?.job._id}`)
-                        }
-                        onToggleSave={() =>
-                          handleUnsaveJob(savedJob?.job._id)
-                        }
-                        saved
-                      />
-                    ))}
-                  </div>
-                )}
-              </div>
+                    Browse Jobs
+                  </button>
+                </div>
+              ) : (
+                <div
+                  className={
+                    viewMode === "grid"
+                      ? "grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-6"
+                      : "space-y-4 lg:space-y-6"
+                  }
+                >
+                  {savedJobList.map((savedJob) => (
+                    <JobCard
+                      key={savedJob._id}
+                      job={savedJob?.job}
+                      onClick={() =>
+                        navigate(`/job/${savedJob?.job._id}`)
+                      }
+                      onToggleSave={() =>
+                        handleUnsaveJob(savedJob?.job._id)
+                      }
+                      saved
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         )}
