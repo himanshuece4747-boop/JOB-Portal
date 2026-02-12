@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { validateEmail, validatePassword, validateAvatar } from '../utils/helper.js'
+import { validateEmail, validatePassword, validateAvatar } from "../../utils/helper"
 import {
   User, Mail, Lock, Upload, Eye, EyeOff, UserCheck, Building2, CheckCircle, AlertCircle, Loader,
   Loader2,

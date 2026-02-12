@@ -1,5 +1,5 @@
 import React from "react";
-import { employerFeatures, jobSeekerFeatures } from "../../../utils/data";
+import { employerFeatures, jobSeekerFeatures } from "../../utils/data";
 
 const Features = () => {
   return (

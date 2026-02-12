@@ -1,7 +1,7 @@
 import {useState, useEffect } from "react"
 import {Searcch,Filter, Grid, List, X} from "lucide-react"
-import LoadingSpinner from "../../components/LoadingSpinner";
-import axiosInstance from "../../utiles/axiosInstance";
+import LoadingSpinner from "../../components/layout/LoadingSpinner";
+import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
