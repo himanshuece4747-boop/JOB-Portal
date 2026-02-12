@@ -1,30 +1,36 @@
 import React, { useState } from 'react'
-import { motion} from 'framer-motion'
-import { validateEmail, validatePassword,validateAvatar } from '../utils/helper.js'
-import { 
-  User,Mail,Lock,Upload, Eye,EyeOff,UserCheck,Building2,CheckCircle,AlertCircle,Loader,
-  Loader2,} from 'lucide-react'
-
+import { motion } from 'framer-motion'
+import { validateEmail, validatePassword, validateAvatar } from '../utils/helper.js'
+import {
+  User, Mail, Lock, Upload, Eye, EyeOff, UserCheck, Building2, CheckCircle, AlertCircle, Loader,
+  Loader2,
+} from 'lucide-react'
+import { validateAvatar, validateEmail, validatePassword } from "../../utils/helper";
+import axiosInstance from "../../utils/axiosInstance";
+import { API_PATHS } from "../../utils/apiPaths";
+import uploadImage from "../../utils/uploadImage";
+import { useAuth } from "../../context/AuthContext";
 
 const SignUp = () => {
+  const { login } = useAuth();
 
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
     password: '',
-    role:'',
+    role: '',
     avatar: null,
   });
 
-  const [ formState, setFormState] = useState({
+  const [formState, setFormState] = useState({
     loading: false,
-    errors:{},
+    errors: {},
     showPassword: false,
     avatarPreview: null,
     success: false,
   })
 
-  const handleInputChange = (e) =>{
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -32,17 +38,17 @@ const SignUp = () => {
     }));
   }
 
-  
-  if(formState.errors[name]) {
+
+  if (formState.errors[name]) {
     setFormState(prev => ({
       ...prev,
       errors: { ...prev.errors, [name]: '' }
     }))
   }
 
-  const handleRoleChange = (role) =>{
-    setFormData(prev => ({...prev,role,}));
-    if(formState.errors.role) {
+  const handleRoleChange = (role) => {
+    setFormData(prev => ({ ...prev, role, }));
+    if (formState.errors.role) {
       setFormState(prev => ({
         ...prev,
         errors: { ...prev.errors, role: '' }
@@ -50,33 +56,33 @@ const SignUp = () => {
     }
   };
 
-  const handleAvatarChange = (e) =>{
+  const handleAvatarChange = (e) => {
     const file = e.target.files[0];
-    if(file) {
+    if (file) {
       const error = validateAvatar(file);
-      if(error) {
+      if (error) {
         setFormState(prev => ({
-          ...prev,  
+          ...prev,
           errors: { ...prev.errors, avatar: error }
         }))
         return;
       }
-     
-      setFormData(prev => ({...prev, avatar: file}));
+
+      setFormData(prev => ({ ...prev, avatar: file }));
       //Create Preview
       const reader = new FileReader();
       reader.onload = (e) => {
         setFormState(prev => ({
-          ...prev, 
+          ...prev,
           avatarPreview: e.target.result,
-        errors: { ...prev.errors, avatar: '' },
+          errors: { ...prev.errors, avatar: '' },
         }));
       }
       reader.readAsDataURL(file);
     }
   };
 
-  const validateForm = () =>{
+  const validateForm = () => {
     const errors = {
       fullName: formData.fullName.trim() ? '' : 'Full name is required.',
       email: validateEmail(formData.email),
@@ -87,48 +93,74 @@ const SignUp = () => {
 
     //Remove empty error
     Object.keys(errors).forEach(key => {
-      if(!errors[key]) delete errors[key];
+      if (!errors[key]) delete errors[key];
     });
 
-    setFormState(prev => ({...prev, errors}));
+    setFormState(prev => ({ ...prev, errors }));
     return Object.keys(errors).length === 0;
 
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!validateForm()) return;
-    setFormState(prev => ({...prev, loading: true }));
-    
+    if (!validateForm()) return;
+    setFormState(prev => ({ ...prev, loading: true }));
+
     try {
-      //Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      setFormState(prev => ({...prev, success: true }));
-      //Redirect after delay
+      // Redirect based on user role
       setTimeout(() => {
-        window.location.href = '/dashboard';
-      }, 3000);
-    } catch (error) {
+        const redirectPath =
+          user.role === 'employer'
+            ? '/employer-dashboard'
+            : '/find-jobs';
+
+        window.location.href = redirectPath;
+      }, 1500);
+
+      // Handle successful registration
+      setFormState(prev => ({
+        ...prev,
+        loading: false,
+        success: true,
+        errors: {},
+      }));
+
+      const { token } = response.data;
+
+      if (token) {
+        login(response.data, token);
+
+        // Redirect based on role
+        setTimeout(() => {
+          window.location.href =
+            formData.role === "employer"
+              ? "/employer-dashboard"
+              : "/find-jobs";
+        }, 2000);
+      }
+    }
+    catch (error) {
       console.log("error", error);
       setFormState(prev => ({
-        ...prev, 
+        ...prev,
         loading: false,
-        errors: { 
+        errors: {
           submit:
             error.response?.data?.message ||
-            "Registration failed. Please try again. "}  
+            "Registration failed. Please try again. "
+        }
       }))
     }
   }
 
-  
 
-  if(formState.success) {
-    return(
-      <div className='min-h-screen flex items-center justify-center bg-gray-50 px-4 py-8'>  
+
+  if (formState.success) {
+    return (
+      <div className='min-h-screen flex items-center justify-center bg-gray-50 px-4 py-8'>
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}    
+          animate={{ opacity: 1, scale: 1 }}
           className='bg-white p-8 rounded-xl shadow-lg max-w-md w-full text-center'
         >
           <CheckCircle className='w-16 h-16 text-green-500 mx-auto mb-4' />
@@ -151,10 +183,10 @@ const SignUp = () => {
   return (
     <div className='min-h-screen flex items-center justify-center bg-gray-50 px-4 py-8'>
       <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{duration:0.6}}
-      className='bg-white p-8 rounded-xl shadow-lg max-w-md w-full'
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className='bg-white p-8 rounded-xl shadow-lg max-w-md w-full'
       >
         <div className='text-center mb-8'>
           <h2 className='text-2xl font-bold text-gray-900 mb-2'>
@@ -173,16 +205,15 @@ const SignUp = () => {
             </label>
             <div className='relative'>
               <User className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400' />
-              <input 
+              <input
                 type='text'
                 name='fullName'
                 value={formData.fullName}
                 onChange={handleInputChange}
-                className={`w-full pl-10 pr-4 py-3 rounded-lg border ${
-                  formState.errors.fullName 
-                  ? 'border-red-500' 
+                className={`w-full pl-10 pr-4 py-3 rounded-lg border ${formState.errors.fullName
+                  ? 'border-red-500'
                   : 'border-gray-300'
-                } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors`}
+                  } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors`}
                 placeholder='Enter your full name'
               />
             </div>
@@ -201,16 +232,15 @@ const SignUp = () => {
             </label>
             <div className='relative'>
               <Mail className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400' />
-              <input 
+              <input
                 type='email'
                 name='email'
                 value={formData.email}
                 onChange={handleInputChange}
-                className={`w-full pl-10 pr-4 py-3 rounded-lg border ${
-                  formState.errors.email 
-                  ? 'border-red-500' 
+                className={`w-full pl-10 pr-4 py-3 rounded-lg border ${formState.errors.email
+                  ? 'border-red-500'
                   : 'border-gray-300'
-                } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors`}
+                  } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors`}
                 placeholder='Enter your email address'
               />
             </div>
@@ -229,26 +259,26 @@ const SignUp = () => {
             </label>
             <div className='relative'>
               <Lock className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400' />
-              <input 
+              <input
                 type={formState.showPassword ? 'text' : 'password'}
                 name='password'
                 value={formData.password}
                 onChange={handleInputChange}
-                className={`w-full pl-10 pr-12 py-3 rounded-lg border ${
-                  formState.errors.password 
-                  ? 'border-red-500' 
+                className={`w-full pl-10 pr-12 py-3 rounded-lg border ${formState.errors.password
+                  ? 'border-red-500'
                   : 'border-gray-300'
-                } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors`}
+                  } focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors`}
                 placeholder='Enter your password'
               />
               <button
                 type="button"
-                onClick={() => 
-                  setFormState(prev => 
-                    ({ ...prev, 
-                      showPassword: !prev.showPassword
-                    }))
-                  }
+                onClick={() =>
+                  setFormState(prev =>
+                  ({
+                    ...prev,
+                    showPassword: !prev.showPassword
+                  }))
+                }
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
               >
                 {formState.showPassword ? (
@@ -274,7 +304,7 @@ const SignUp = () => {
             <div className='flex items-center space-x-4'>
               <div className='w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden'>
                 {formState.avatarPreview ? (
-                  <img 
+                  <img
                     src={formState.avatarPreview}
                     alt="Avatar Preview"
                     className="w-full h-full object-cover"
@@ -284,14 +314,14 @@ const SignUp = () => {
                 )}
               </div>
               <div className=''>
-                <input 
+                <input
                   type='file'
                   id="avatar"
                   accept='.jpg,.jpeg,.png'
                   onChange={handleAvatarChange}
                   className="hidden"
                 />
-                <label 
+                <label
                   htmlFor="avatar"
                   className="cursor-pointer bg-gray-50 border border-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-100 transition-colors flex items-center"
                 >
@@ -319,11 +349,10 @@ const SignUp = () => {
               <button
                 type='button'
                 onClick={() => handleRoleChange('jobSeeker')}
-                className={`p-4 rounded-lg border-2 transition-all ${
-                  formData.role === 'jobSeeker' 
-                  ? 'border-blue-600 bg-blue-50 text-blue-700'  
+                className={`p-4 rounded-lg border-2 transition-all ${formData.role === 'jobSeeker'
+                  ? 'border-blue-600 bg-blue-50 text-blue-700'
                   : 'border-gray-200 hover:border-gray-300'
-                } `}
+                  } `}
               >
                 <UserCheck className='w-8 h-8 mx-auto mb-2' />
                 <div className='font-medium'>Job Seeker</div>
@@ -334,11 +363,10 @@ const SignUp = () => {
               <button
                 type='button'
                 onClick={() => handleRoleChange('employer')}
-                className={`p-4 rounded-lg border-2 transition-all ${
-                  formData.role === 'employer' 
-                  ? 'border-blue-600 bg-blue-50 text-blue-700'  
+                className={`p-4 rounded-lg border-2 transition-all ${formData.role === 'employer'
+                  ? 'border-blue-600 bg-blue-50 text-blue-700'
                   : 'border-gray-200 hover:border-gray-300'
-                } `}
+                  } `}
               >
                 <Building2 className='w-8 h-8 mx-auto mb-2' />
                 <div className='font-medium'>Employer</div>
@@ -368,7 +396,7 @@ const SignUp = () => {
 
           {/* Submit Button */}
           <button
-            type='submit' 
+            type='submit'
             className='w-full bg-linear-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center'
             disabled={formState.loading}
           >
@@ -386,9 +414,9 @@ const SignUp = () => {
           <div className="mt-4 text-center">
             <p className="text-sm text-gray-600">
               Already have an account?{' '}
-              <a 
-              href="/login" 
-              className="text-blue-600 hover:text-blue-700 font-medium"
+              <a
+                href="/login"
+                className="text-blue-600 hover:text-blue-700 font-medium"
               >
                 Sign in here
               </a>
