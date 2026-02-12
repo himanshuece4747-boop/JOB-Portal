@@ -11,6 +11,8 @@ import {
 } from 'lucide-react';
 import {validateEmail} from "../../utils/helper";
 import {useAuth} from "../../context/AuthContext";
+import {API_PATHS} from '../../utils/apiPaths';
+import {axiosInstance} from '../../utils/axiosInstance';
 
 const Login = () => {
   const { login } = useAuth()
@@ -100,6 +102,7 @@ const Login = () => {
         }, 2000);
       }
       // Redirect based on user role
+      
       setTimeout(() => {
         const redirectPath =
           user.role === 'employer'

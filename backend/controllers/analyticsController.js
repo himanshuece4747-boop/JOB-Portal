@@ -41,7 +41,7 @@ exports.getEmployerAnalytics = async (req,res) => {
 
         const activeJobsPrev7 =await Job.countDocuments({
             company:companyId,
-            createdAt:{$gte:prev7Days,$lte:last7Days},
+            createdAt:{$gte:prev7Days,$lt:last7Days},
         });
 
         const activeJobTrend = getTrend(activeJobsLast7.activeJobsPrev7);
@@ -54,7 +54,7 @@ exports.getEmployerAnalytics = async (req,res) => {
 
         const applicationPrev7 = await Application.countDocuments({
             job:{$in:jobIds},
-            createdAt:{$gte:prev7Days,$lte:last7Days},
+            createdAt:{$gte:prev7Days,$lt:last7Days},
         });
 
         const applicantTrend = getTrend(applicationLast7.applicationPrev7);
@@ -69,7 +69,7 @@ exports.getEmployerAnalytics = async (req,res) => {
         const hiredPrev7 = await Application.countDocuments({
             job:{$in:jobIds},
             status:"Accepted",
-            createdAt:{$gte:prev7Days,$lte:last7Days},
+            createdAt:{$gte:prev7Days,$lt:last7Days},
         });
 
         const hiredTrend = getTrend(hiredLast7.hiredPrev7);
@@ -78,7 +78,7 @@ exports.getEmployerAnalytics = async (req,res) => {
         const recentJobs = await Job.find({company:companyId})
             .sort({createdAt:-1})
             .limit(5)
-            .select("title location type createdAt isCLosed");
+            .select("title location type createdAt isClosed");
         const recentApplications = await Application.find({
             job:{$in:jobIds},
         })

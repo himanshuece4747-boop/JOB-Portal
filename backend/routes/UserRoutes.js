@@ -12,7 +12,7 @@ const router = express.Router();
 router.put("/profile", protect, updateProfile);
 router.post("/resume", protect, deleteResume);
 
-//Public routes
+//Public routes 
 router.get("/:id", getPublicProfile);
 
 module.exports = router;
