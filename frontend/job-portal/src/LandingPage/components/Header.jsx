@@ -19,10 +19,10 @@ const Header = () => {
                 {/* logo */}
                 <div className="flex items-center space-x-3">
                     <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify">
-                        <Briefcase className="w-5 h-5 text-white" />
+                        <Briefcase className="w-8 h-5 text-white" />
                     </div>
                     
-                    <span className="text-xl font-bold text-gray-900">jobPortal</span>
+                    <span className="text-xl font-bold text-gray-900">JobPortal</span>
                 </div>
 
                 {/* Navigation Link - Hidden on mobile */}

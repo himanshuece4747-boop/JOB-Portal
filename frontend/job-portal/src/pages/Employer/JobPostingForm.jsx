@@ -1,17 +1,17 @@
 import React from 'react'
-import DashboardLayout from '../../components/Layout/DashboardLayout'
+import DashboardLayout from '../../components/layout/DashboardLayout'
 import {useState, useEffect } from 'react'
 import {
   AlertCircle,
   MapPin,
   DollarSign,
-  BriefCase,
+  Briefcase,
   Users,
   Eye,
   Send,
 } from "lucide-react"
 import {API_PATHS} from '../../utils/apiPaths';
-import { useLoacation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axiosInstance from '../../utils/axiosInstance';
 import {CATEGORIES, JOB_TYPES } from '../../utils/data';
 import { toast } from 'react-hot-toast';
@@ -20,7 +20,7 @@ import { SelectField } from '../../components/Input/SelectField';
 const JobPostingForm = () => {
 
   const navigate = useNavigate();
-  const location = useLoacation();
+  const location = useLocation();
   const jobId = location.state?.jobId || null;
   const [formData, setFormData] = useState({
     jobTitle: '',
@@ -158,7 +158,7 @@ const JobPostingForm = () => {
     const fetchJobDetails = async () => {
         if(jobId) {
             try {
-                const response = await axionInstance.get(
+                const response = await axiosInstance.get(
                     API_PATHS.JOBS.GET_JOB_BY_ID(jobId)
                 );
                 const jobData = response.data;
@@ -282,7 +282,7 @@ const JobPostingForm = () => {
                         placeholder='Select job type'
                         error={errors.jobType}
                         required
-                        icon={BriefCase}
+                        icon={Briefcase}
                     />
                 </div>
             </div>

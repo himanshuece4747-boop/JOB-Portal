@@ -13,7 +13,7 @@ import {
     Plus,
 } from "lucide-react"
  
-export const jobSeekersFeatures = [
+export const jobSeekerFeatures = [
     {
         icon: Search,
         title: "Smart Job Martching",
@@ -72,7 +72,7 @@ export const employerFeatures = [
 export const NAVIGATION_MENU = [
     {id: "employer-dashboard", name: "Dashboard", icon: LayoutDashboard },
     { id: "post-job", name: "Post Job", icon: Plus},
-    {id: "manage-jobs", name: "Manage Jobs", icon: BriefCase },
+    {id: "manage-jobs", name: "Manage Jobs", icon: Briefcase },
     {id: "company-profile", name: "Company Profile", icon: Building2},
 ]
 

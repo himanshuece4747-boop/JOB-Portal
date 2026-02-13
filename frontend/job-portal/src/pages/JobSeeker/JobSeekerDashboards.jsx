@@ -1,5 +1,5 @@
 import {useState, useEffect } from "react"
-import {Searcch,Filter, Grid, List, X} from "lucide-react"
+import {Search,Filter, Grid, List, X} from "lucide-react"
 import LoadingSpinner from "../../components/layout/LoadingSpinner";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";

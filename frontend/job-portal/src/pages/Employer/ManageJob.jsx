@@ -7,7 +7,6 @@ import{
   X,
   Trash2,
   ChevronUp,
-  ChvronDown,
   Users,
   ChevronDown,
 } from "lucide-react";

@@ -47,7 +47,7 @@ const Analytics = () => {
                     Platform
                     <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Analytics</span>
                 </h2>
-                <p className="text-xl text-gray-600 max-w-3xl max-auto">
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
                     Real-time insights and data-driven results that showcase the power of our platform in connecting talent with opportunities.
 
                 </p>

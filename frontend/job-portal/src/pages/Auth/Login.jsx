@@ -12,7 +12,7 @@ import {
 import {validateEmail} from "../../utils/helper";
 import {useAuth} from "../../context/AuthContext";
 import {API_PATHS} from '../../utils/apiPaths';
-import {axiosInstance} from '../../utils/axiosInstance';
+import axiosInstance from '../../utils/axiosInstance';
 
 const Login = () => {
   const { login } = useAuth()
