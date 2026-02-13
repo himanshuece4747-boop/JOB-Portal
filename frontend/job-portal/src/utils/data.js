@@ -7,7 +7,7 @@ import {
     Shield,
     Clock,
     Award,
-    BriefCase,
+    Briefcase,
     Building2,
     LayoutDashboard,
     Plus,
