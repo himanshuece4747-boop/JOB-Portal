@@ -6,8 +6,8 @@ import { API_PATHS } from "../../utils/apiPaths";
 import toast from "react-hot-toast";
 import uploadImage from "../../utils/uploadImage";
 
-import DashboardLayout from "../../components/layout/DashboardLayout";
-import EditProfileDetails from "../EditProfileDetails";
+import DashboardLayout from "../../components/Layout/DashboardLayout";
+import EditProfileDetails from "./EditProfileDetails";
 
 const EmployerProfilePage = () => {
   const { user, updateUser } = useAuth();

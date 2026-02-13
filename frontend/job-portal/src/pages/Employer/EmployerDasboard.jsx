@@ -11,9 +11,9 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom"; 
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths"; 
-import DashboardLayout from "../../Layout/DashboardLayout"; 
-import LoadingSpinner from "../../components/LoadingSpinner"; 
-import ApplicationDashboardCard from "../../components/ApplicationDashboardCard"; //  import your card
+import DashboardLayout from "../../components/Layout/DashboardLayout"; 
+import LoadingSpinner from "../../components/layout/LoadingSpinner"; 
+import ApplicationDashboardCard from "../../components/Cards/ApplicantDashboardCard"; //  import your card
 
 const Card = ({ title, headerAction, subtitle, className, children }) => {
   return (
