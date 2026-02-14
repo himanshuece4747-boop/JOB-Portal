@@ -21,16 +21,16 @@ const SavedJobs = () => {
   const [viewMode, setViewMode] = useState("grid");
 
   const getSavedJobs = async () => {
-    try {
-      const response = await axiosInstance.get(
-        API_PATHS.JOBS.GET_SAVED_JOBS
-      );
+  try {
+    const response = await axiosInstance.get(API_PATHS.JOBS.GET_SAVED_JOBS);
 
-      setSavedJobList(response.data);
-    } catch (error) {
-      console.error("Error fetching saved jobs:", error);
-    }
-  };
+    // Make sure to extract the array from the response
+    setSavedJobList(response.data.savedJobs || []); 
+  } catch (error) {
+    console.error("Error fetching saved jobs:", error);
+    setSavedJobList([]); // fallback to avoid crashes
+  }
+};
 
   const handleUnsaveJob = async (jobId) => {
     try {

@@ -38,7 +38,7 @@ const JobDetails = () => {
   const applyToJob = async () => {
     try {
       if(jobId) {
-        await axiosInstance.post(API_PATHS.APPLICATIONS.APPLY_TO_JOB(jobId));
+        await axiosInstance.post(API_PATHS.APPLICATIONS.APPLY_TO_JOB(jobId),{ userId: user?._id || null});
         toast.success("Applied successfully!");
       }
 
@@ -99,7 +99,7 @@ const JobDetails = () => {
                      <StatusBadge status={jobDetails.applicationStatus} />
                     ) : (
                       <button
-                        className="bg-gradient-to-r from-blue-50 to-blue-50 text-sm text-blue-700 hover:text-white px-6 py-2.5 rounded-xl hover:from-blue-500 hover:to-blue-600 transition-all duration-200 font-semibold transform hover:-translate-y-0.5"
+                        className="bg-blue-50 text-sm text-blue-700 hover:bg-blue-600 hover:text-white px-6 py-2.5 rounded-xl transition-all duration-200 font-semibold transform hover:-translate-y-0.5"
                         onClick={applyToJob}
                       >
                         Apply Now
@@ -143,7 +143,7 @@ const JobDetails = () => {
                             Compensation
                           </h3>
                           <div className="text-lg font-bold text-gray-900">
-                            {jobDetails.salaryMin} - {jobDetails.salaryMax}
+                            {jobDetails.salaryMin ?? "N/A"} - {jobDetails.salaryMax ?? "N/A"}
                             <span className="text-lg text-gray-600 font-normal ml-1">
                               per year
                             </span>

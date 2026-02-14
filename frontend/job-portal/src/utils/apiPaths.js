@@ -26,13 +26,13 @@ export const API_PATHS = {
 
         SAVE_JOB:(id) =>`/api/save-jobs/${id}`,
         UNSAVE_JOB:(id) =>`/api/save-jobs/${id}`,
-        GET_SAVED_JOBS:'api/save-jobs/my',
+        GET_SAVED_JOBS:'/api/save-jobs/my',
     },
 
     APPLICATIONS:{
-        APPLY_TO_JOB:(id) => `/api/application/${id}`,
-        GET_ALL_APPLICATIONS:(id) => `/api/application/job/${id}`,
-        UPDATE_STATUS:(id) => `/api/application/${id}/status`,
+        APPLY_TO_JOB:(id) => `/api/applications/${id}`,
+        GET_ALL_APPLICATIONS:(id) => `/api/applications/job/${id}`,
+        UPDATE_STATUS:(id) => `/api/applications/${id}/status`,
     },
 
     IMAGE:{

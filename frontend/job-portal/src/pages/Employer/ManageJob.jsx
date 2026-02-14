@@ -82,15 +82,28 @@ const ManageJob = () => {
 
   // Toggle the status of a job
   const handleStatusChange = async (jobId) => {
-    try {
-      const response =await axiosInstance.put(
-        API_PATHS.JOBS.TOGGLE_CLOSE(jobId)
-      );
-    } catch (error) {
-      console.error("Error toggling job status:",error);
-      
-    }
-  };
+  try {
+    await axiosInstance.put(
+      API_PATHS.JOBS.TOGGLE_CLOSE(jobId)
+    );
+
+    setJobs(prevJobs =>
+      prevJobs.map(job =>
+        job.id === jobId
+          ? {
+              ...job,
+              status: job.status === "Active" ? "Closed" : "Active",
+            }
+          : job
+      )
+    );
+
+    toast.success("Job status updated successfully");
+  } catch (error) {
+    console.error("Error toggling job status:", error);
+  }
+};
+
 
   // Delete a spoecific job 
   const handleDeleteJob = async (jobId) => {
@@ -280,13 +293,13 @@ const ManageJob = () => {
                         className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-100/60 transition-all duration-200 min-w-[120px] sm:min-w-0"
                         onClick={() =>handleSort("status")}
                         >
-                          <div className="flex-items-center space-x-1">
+                          <div className="flex items-center space-x-1">
                             <span>Status</span>
                             <SortIcon field="status"></SortIcon>
                           </div>
                         </th>
                         <th 
-                        className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-100/60 transition-all duration-200 min-w-[130px] sm-min-w-0"
+                        className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-100/60 transition-all duration-200 min-w-[130px] sm:min-w-0"
                         onClick={()=>handleSort("applicants")}
                         >
                           <div className="flex items-center space-x-1">
@@ -441,7 +454,7 @@ const ManageJob = () => {
                           setCurrentPage(Math.max(1,currentPage-1))
                         }
                         disabled={currentPage===1}
-                        className="relaitve inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           Previous
                         </button>

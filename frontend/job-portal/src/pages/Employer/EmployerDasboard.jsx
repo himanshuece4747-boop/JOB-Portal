@@ -205,7 +205,7 @@ const EmployerDashboard = () => {
                 {dashboardData?.data?.recentApplications
                   ?.slice(0, 3)
                   ?.map((data, index) => (
-                    <ApplicationDashboardCard
+                    <ApplicantDashboardCard
                       key={index}
                       applicant={data?.applicant || ""}
                       position={data?.job?.title || ""}

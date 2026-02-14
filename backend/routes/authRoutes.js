@@ -13,7 +13,7 @@ router.get("/me", protect, getMe);
 // Upload user image (protected)
 router.post(
     "/upload-image",
-    protect,
+    //protect,
     upload.single("image"),
     (req, res) => {
         if (!req.file) {

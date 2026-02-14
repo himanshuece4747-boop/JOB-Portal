@@ -10,9 +10,11 @@ import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import uploadImage from "../../utils/uploadImage";
 import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     fullName: '',

@@ -9,6 +9,7 @@ import { useAuth } from "../../context/AuthContext"
 import Navbar from "../../components/layout/Navbar"
 import SearchHeader from "./components/SearchHeader";
 import FilterContent from "./components/FilterContent"
+import JobCard from "../../components/Cards/JobCard"
 
 
 const JobSeekerDashboards = () => {
@@ -31,6 +32,8 @@ const JobSeekerDashboards = () => {
     type:"",
     minSalary:"",
     maxSalary:"",
+    experience: "", 
+    remoteOnly: false,
   });
 
   //Sidebar collapse states
@@ -192,6 +195,7 @@ const JobSeekerDashboards = () => {
   };
 
   const applyToJob = async (jobId) => {
+     console.log("Applying to job URL:", API_PATHS.APPLICATIONS.APPLY_TO_JOB(jobId))
     
   try{
     if(jobId) {
@@ -208,8 +212,8 @@ const JobSeekerDashboards = () => {
   };
 
   if(jobs.length == 0 && loading ) {
-    return <LoadingSpinner />
-  }
+  return <LoadingSpinner />
+}
 
   return (
     <div className="bg-gradient-br from-blue-50 via-white to-purple-50">
@@ -223,7 +227,22 @@ const JobSeekerDashboards = () => {
             filters={filters}
             handleFilterChange={handleFilterChange}
           />
-        </div>
+        {/* Job Cards */}
+          <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {jobs.map((job) => (
+              <JobCard 
+                key={job._id} 
+                job={job} 
+                onApply={() => applyToJob(job._id)} 
+                onToggleSave={() => toggleSavedJob(job._id, job.isSaved)} 
+                saved={job.isSaved}
+              />
+            ))}
+          </div>
+
+
+  </div>
+        
         {/*Mobile Filter Overlay */}
         <MobileFilterOverlay />
 

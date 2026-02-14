@@ -19,15 +19,15 @@ const JobPostingPreview = ({ formData, setIsPreview }) =>{
         <div className="mb-8 backdrop-blur-sm bg-white/80 border-white/20 shadow-xl rounded-xl rounded-2xl  px-6 pt-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <h2 className="text-lg md:text-xl font-bold bg-gradient-to-r from-gray-900 to-gary-600 bg-clip-text text-transparent">
+              <h2 className="text-lg md:text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
                 Job Preview
               </h2>
             </div>
             <button
               onClick={() => setIsPreview(false)}
-              className="group flex items-center space-x-2 px-6 text-xs md:text-sm font-medium text-gray-600 hover:text-white bg-white/50 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 border border-gray-200 hover:borser-transparent rounded-xl transition-all duration-lg shadow-lg shadow-gray-100 hover:shadow-xl transform hover:-translate-y"
+              className="group flex items-center space-x-2 px-6 text-xs md:text-sm font-medium text-gray-600 hover:text-white bg-white/50 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 border border-gray-200 hover:border-transparent rounded-xl transition-all duration-lg shadow-lg shadow-gray-100 hover:shadow-xl transform hover:-translate-y-1"
             > 
-              <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-" />
+              <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
               <span>Back to Edit</span>
             </button>
           </div>
@@ -36,7 +36,7 @@ const JobPostingPreview = ({ formData, setIsPreview }) =>{
           <div className="">
             {/* Hero section with clean background */}
             <div className="relative bg-white px-0 pb-8 mt-8 border-b border-gray-100">
-              <div className="relative z-100">
+              <div className="relative z-10">
                 <div className="flex items-start justify-between mb-0">
                   <div className="flex-1">
                     <h1 className="text-lg lg:text-xl font-semibold mb-2 leading-tight text-gray-900">
@@ -59,14 +59,14 @@ const JobPostingPreview = ({ formData, setIsPreview }) =>{
                     </div>
                   </div>
 
-                  {user?.cpmpanyLogo ? (
+                  {user?.companyLogo ? (
                     <img
                       src={user.companyLogo}
                       alt="Company Logo"
                       className="h-16 md:h-20 w-16 md:w-20 object-cover rounded-2xl border-4 border-white/20 shadow-lg"
                     />
                   ) : (
-                    <div className="h-20 w-20 bg-gray-50 border-20 border-gray-200 rounded-2xl flex items-center justify-center">
+                    <div className="h-20 w-20 bg-gray-50 border-2 border-gray-200 rounded-2xl flex items-center justify-center">
                       <Building2 className="h-8 w-8 text-gray-400"/>
                     </div>
                   )}
@@ -81,7 +81,7 @@ const JobPostingPreview = ({ formData, setIsPreview }) =>{
                                       
                     }
                   </span>
-                  <span className="px-4 py-2 text-sm bg-purple-700 font-semibold rounded-full border border-purple-200">
+                  <span className="px-4 py-2 text-sm text-white bg-purple-700 font-semibold rounded-full border border-purple-200">
                     {JOB_TYPES.find((j) => j.value === formData.jobType)?.label}
                   </span>
                   <div className="flex items-center space-x-1 px-4 py-2 bg-gray-50 text-sm text-gray-700 font-semibold rounded-full border border-gray-200">

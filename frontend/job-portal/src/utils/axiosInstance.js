@@ -14,15 +14,22 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     const accessToken = localStorage.getItem("token");
-    if (accessToken) {
+
+    if (
+      accessToken &&
+      accessToken !== "null" &&
+      accessToken !== "undefined"
+    ) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
+
     return config;
   },
   (error) => {
     return Promise.reject(error);
   }
 );
+
 
 // Response Interceptor
 axiosInstance.interceptors.response.use(
@@ -34,7 +41,7 @@ axiosInstance.interceptors.response.use(
     if (error.response) {
       if (error.response.status === 401) {
         // Redirect to login page
-        window.location.href = "/";
+        console.log("401 error from:", error.config.url);
       } else if (error.response.status === 500) {
         console.error("Server error. Please try again later.");
       }

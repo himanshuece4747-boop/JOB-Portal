@@ -41,6 +41,10 @@ export const AuthProvider = ({ children }) => {
 
   const login = (userData, token) => {
 
+    if (!userData.avatar) {
+    userData.avatar = '/default-avatar.png'; // Put a default avatar in public folder
+  }
+
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(userData));
 

@@ -25,7 +25,7 @@ const onChangeStatus = async (e) => {
 
     try {
         const response = await axiosInstance.put(
-            API_PATHS.APPLICATIONS.UPDATE_STATUS (selectedApplicant._id),
+            API_PATHS.APPLICATIONS.UPDATE_STATUS(selectedApplicant._id),
             { status: newStatus }
         );
 
@@ -43,7 +43,7 @@ const onChangeStatus = async (e) => {
         }
     };
 
-    return <div className="fixed inset-0bg-[0,0,0,2] bg-opacity-50 flex items-center justify-centerp-4 z-50" >
+    return <div className="fixed inset-0 bg-black/20 flex items-center justify-center p-4 z-50" >
         <div className="bg-white rounded-xl shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto"> 
             {/*Modal Header*/}
             <div className="flex items-center justify-between p-6 border-b border-gray-600">
@@ -103,7 +103,7 @@ const onChangeStatus = async (e) => {
                             <div className="flex justify-between">
                                 <span className="text-gray-600">Applied Date:</span>
                                 <span className="text-gray-900">
-                                    {moment(selectedApplicant.createdAt)?.format("Do MM YYYY")}
+                                    {moment(selectedApplicant.createdAt).format("Do MM YYYY")}
                                 </span>
                             </div>
                         </div>

@@ -12,13 +12,13 @@ const Header = () => {
         initial={{ opacity: 0, y: -20}}
         animate={{ opacity: 1, y: 0}}
         transition={{ duration: 0.6}}
-        className="fixed top-0 left-0 right-0 z-50 bg-white/95 background-blur-sm border-b border-gray-100"
+        className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100"
     >
         <div className="container mx-auto px-4">
             <div className="flex item-center justify-between h-16">
                 {/* logo */}
                 <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify">
+                    <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
                         <Briefcase className="w-8 h-5 text-white" />
                     </div>
                     
@@ -51,14 +51,14 @@ const Header = () => {
                     <div className="flex items-center space-x-3">
                         {isAuthenticated ? (
                             <div className="flex items-center space-x-3">
-                                <spam className="text-gray-700">welcome, {user?.fullName}</spam>
+                                <span className="text-gray-700">welcome, {user?.fullName}</span>
                                 <a
                                 href={
                                     user?.role === "employer"
                                     ? "/employer-dashboard"
                                     : "/find-jobs"
                                 }
-                                className="bg-gradient-to-r from-blue-600 to-purple text-white px-6 py-2 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-sm hover:shadow-md"
+                                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-sm hover:shadow-md"
                                 >
                                 Dashboard
                                 </a>
@@ -73,7 +73,7 @@ const Header = () => {
                             </a>
                             <a
                             href="/signup"
-                            className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 trasition-all duration-300 shadow-sm hover:shadow-md "
+                            className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-sm hover:shadow-md "
                             >
                             Sign up   
                             </a>
