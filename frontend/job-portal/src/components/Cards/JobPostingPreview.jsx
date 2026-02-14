@@ -2,104 +2,155 @@ import {
   MapPin,
   DollarSign,
   ArrowLeft,
-  Building2, 
+  Building2,
   Clock,
-  Users,
+  IndianRupee,
 } from "lucide-react";
 import { CATEGORIES, JOB_TYPES } from "../../utils/data";
 import { useAuth } from "../../context/AuthContext";
 
-const JobPostingPreview = ({ formData, setIsPreview }) =>{
-  const {user} = useAuth()
-  const currencies = [{ value:"usd", label: "$"}];
+const JobPostingPreview = ({ formData, setIsPreview }) => {
+  const { user } = useAuth();
 
-  return <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 to-purple-50/20 py-8 px-4 sm:px-6 lg:px-8">
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
-        {/* Header with glassmorphism effect */}
-        <div className="mb-8 backdrop-blur-sm bg-white/80 border-white/20 shadow-xl rounded-xl rounded-2xl  px-6 pt-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <h2 className="text-lg md:text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
-                Job Preview
-              </h2>
-            </div>
+
+        {/* Header Card */}
+        <div className="bg-white shadow-xl rounded-2xl p-8">
+
+          {/* Top Header */}
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-bold text-gray-800">
+              Job Preview
+            </h2>
+
             <button
               onClick={() => setIsPreview(false)}
-              className="group flex items-center space-x-2 px-6 text-xs md:text-sm font-medium text-gray-600 hover:text-white bg-white/50 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 border border-gray-200 hover:border-transparent rounded-xl transition-all duration-lg shadow-lg shadow-gray-100 hover:shadow-xl transform hover:-translate-y-1"
-            > 
-              <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-              <span>Back to Edit</span>
+              className="flex items-center gap-2 px-5 py-2 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to Edit
             </button>
           </div>
 
-          {/* Main content card */}
-          <div className="">
-            {/* Hero section with clean background */}
-            <div className="relative bg-white px-0 pb-8 mt-8 border-b border-gray-100">
-              <div className="relative z-10">
-                <div className="flex items-start justify-between mb-0">
-                  <div className="flex-1">
-                    <h1 className="text-lg lg:text-xl font-semibold mb-2 leading-tight text-gray-900">
-                        {formData.jobTitle}
-                    </h1>
+          {/* Hero Section */}
+          <div className="border-b border-gray-200 pb-8">
 
-                    <div className="flex items-center space-x-4 text-gray-600">
-                      <div className="flex items-center space-x-2">
-                        <MapPin className="h-4 w-4"/>
-                        <span className="text-sm font-medium">
-                          {formData.isRemote ? "Remote " : formData.location}
-                        </span>
-                        {formData.isRemote && formData.location && (
-                          <span className="text-sm text-gray-500">
-                            {" "}
-                            . {formData.location}
-                          </span>
-                        )}    
-                      </div>
-                    </div>
-                  </div>
+            <div className="flex items-start justify-between">
 
-                  {user?.companyLogo ? (
-                    <img
-                      src={user.companyLogo}
-                      alt="Company Logo"
-                      className="h-16 md:h-20 w-16 md:w-20 object-cover rounded-2xl border-4 border-white/20 shadow-lg"
-                    />
-                  ) : (
-                    <div className="h-20 w-20 bg-gray-50 border-2 border-gray-200 rounded-2xl flex items-center justify-center">
-                      <Building2 className="h-8 w-8 text-gray-400"/>
-                    </div>
-                  )}
+              {/* Left Content */}
+              <div className="flex-1">
+
+                {/* Job Title */}
+                <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3">
+                  {formData.jobTitle}
+                </h1>
+
+                {/* Location */}
+                <div className="flex items-center gap-2 text-gray-600">
+                  <MapPin className="h-4 w-4" />
+                  <span className="text-sm font-medium">
+                    {formData.location}
+                  </span>
                 </div>
 
                 {/* Tags */}
-                <div className="flex flex-wrap gap-3 mt-6 md:mt-0">
-                  <span className="px-4 py-2 bg-blue-50 text-sm text-blue-700 font-semibold rounded-full border border-blue-200 ">
+                <div className="flex flex-wrap gap-3 mt-6">
+
+                  {/* Category */}
+                  <span className="px-4 py-2 bg-blue-100 text-blue-700 text-sm font-medium rounded-full">
                     {
-                      CATEGORIES.find((c) => c.value === formData.category)
-                        ?.label
-                                      
+                      CATEGORIES.find(
+                        (c) => c.value === formData.category
+                      )?.label
                     }
                   </span>
-                  <span className="px-4 py-2 text-sm text-white bg-purple-700 font-semibold rounded-full border border-purple-200">
-                    {JOB_TYPES.find((j) => j.value === formData.jobType)?.label}
+
+                  {/* Job Type */}
+                  <span className="px-4 py-2 bg-purple-100 text-purple-700 text-sm font-medium rounded-full">
+                    {
+                      JOB_TYPES.find(
+                        (j) => j.value === formData.type
+                      )?.label
+                    }
                   </span>
-                  <div className="flex items-center space-x-1 px-4 py-2 bg-gray-50 text-sm text-gray-700 font-semibold rounded-full border border-gray-200">
+
+                  {/* Posted */}
+                  <div className="flex items-center gap-1 px-4 py-2 bg-gray-100 text-gray-600 text-sm font-medium rounded-full">
                     <Clock className="h-4 w-4" />
                     <span>Posted today</span>
                   </div>
+
                 </div>
               </div>
+
+              {/* Company Logo */}
+              <div className="ml-6">
+                {user?.companyLogo ? (
+                  <img
+                    src={user.companyLogo}
+                    alt="Company Logo"
+                    className="h-20 w-20 object-cover rounded-2xl shadow-md"
+                  />
+                ) : (
+                  <div className="h-20 w-20 bg-white shadow-md rounded-2xl flex items-center justify-center">
+                    <Building2 className="h-8 w-8 text-gray-400" />
+                  </div>
+                )}
+              </div>
             </div>
-                
-                
           </div>
+
+          {/* Compensation Section */}
+          <div className="mt-8 bg-green-50 border border-green-100 rounded-2xl p-6 flex items-center justify-between">
+
+            <div className="flex items-center gap-4">
+              <div className="bg-green-600 text-white p-4 rounded-xl shadow-md">
+                <IndianRupee className="h-6 w-6" />
+              </div>
+
+              <div>
+                <p className="text-sm text-gray-500">
+                  Compensation
+                </p>
+                <p className="text-lg font-semibold text-gray-900">
+                  ₹ {formData.salaryMin} - ₹ {formData.salaryMax} per year
+                </p>
+              </div>
+            </div>
+
+            <span className="px-4 py-2 bg-green-100 text-green-700 text-sm font-medium rounded-full">
+              Competitive
+            </span>
+          </div>
+
+          {/* About This Role */}
+          <div className="mt-10">
+            <h3 className="text-lg font-semibold text-gray-900 border-l-4 border-purple-500 pl-3">
+              About This Role
+            </h3>
+
+            <div className="mt-4 bg-gray-50 rounded-xl p-6 text-gray-700 leading-relaxed">
+              {formData.description}
+            </div>
+          </div>
+
+          {/* Requirements */}
+          <div className="mt-10">
+            <h3 className="text-lg font-semibold text-gray-900 border-l-4 border-purple-500 pl-3">
+              What We're Looking For
+            </h3>
+
+            <div className="mt-4 bg-purple-50 rounded-xl p-6 text-gray-700 leading-relaxed">
+              {formData.requirements}
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
+  );
 };
 
 export default JobPostingPreview;
-                        
-                                          
-
