@@ -35,7 +35,7 @@ const FilterContent = ({
       <div>
         <button
           onClick={clearAllFilters}
-          className="text-sm text-red-500 hover:underline"
+          className="text-sm text-blue-500 hover:underline"
         >
           Clear All
         </button>
@@ -69,6 +69,18 @@ const FilterContent = ({
         </div>
       </FilterSection>
 
+      {/* Salary Range Section */}
+      <FilterSection
+        title="Salary Range"
+        isExpanded={expandedSections?.salary}
+        onToggle={() => toggleSection("salary")}
+      >
+        <SalaryRangeSlider
+          filters={filters}
+          handleFilterChange={handleFilterChange}
+        />
+      </FilterSection>
+
       {/* Category Section */}
       <FilterSection
         title="Category"
@@ -97,17 +109,7 @@ const FilterContent = ({
         </div>
       </FilterSection>
 
-      {/* Salary Range Section */}
-      <FilterSection
-        title="Salary Range"
-        isExpanded={expandedSections?.salary}
-        onToggle={() => toggleSection("salary")}
-      >
-        <SalaryRangeSlider
-          filters={filters}
-          handleFilterChange={handleFilterChange}
-        />
-      </FilterSection>
+      
     </div>
   );
 };

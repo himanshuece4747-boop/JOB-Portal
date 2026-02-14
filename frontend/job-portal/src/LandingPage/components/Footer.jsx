@@ -25,11 +25,11 @@ const Footer = () => {
             {/* Copyright */}
               <div className="space-y-2">
                 <p className={'text-sm text-gray-600'}>
-                  © {new Date().getFullYear()} Hire Me Project.
+                  © {new Date().getFullYear()}.
                 </p>
 
                 <p className={'text-xs text-gray-500'}>
-                 Made with ❤️ - Happy Coding
+                 Made with ❤️ By Avinash,Dev,Abhishek,Harsh,Falak,Himanshu,Shamba
                 </p>
              </div>
           </div>

@@ -24,9 +24,10 @@ const Features = () => {
           {/* Job Seekers Section */}
           <div>
             <div className="text-center mb-12">
-              <h3 className="text-2xl font-semibold text-gray-800">
+              <h3 className="text-3xl font-bold text-gray-900 mb-4">
                 For Job Seekers
               </h3>
+              <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto rounded-full" ></div>
             </div>
             <div className="space-y-8">
               {jobSeekerFeatures.map((feature, index) => (
