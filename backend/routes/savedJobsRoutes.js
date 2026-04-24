@@ -5,11 +5,11 @@ const {
     saveJob,
     unsaveJob,
     getSavedJobs,
-} = require("../controllers/savedJobController");
+} = require("../controllers/savedJobsController");
 
 // Protected routes
-router.post("/save/:jobId", protect, saveJob);
-router.delete("/unsave/:jobId", protect, unsaveJob);
-router.get("/", protect, getSavedJobs);
+router.post("/:jobId", protect, saveJob);
+router.delete("/:jobId", protect, unsaveJob);
+router.get("/my", protect, getSavedJobs);
 
 module.exports = router;

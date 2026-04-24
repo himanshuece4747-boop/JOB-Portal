@@ -47,7 +47,7 @@ exports.getJobs =async (req,res) => {
         if (maxSalary) {
             query.$and.push({salaryMax:{$lte:Number(maxSalary)}});
         }
-        if (query.$and.$length===0) {
+        if (query.$and.length===0) {
             delete query.$and;
         }
     }
@@ -79,7 +79,7 @@ exports.getJobs =async (req,res) => {
             const jobIdStr = String(job._id);
             return{
                 ...job.toObject(),
-                isSaved:savedJobIds.includes(jobIdStr),
+                isSaved:savedJobId.includes(jobIdStr),
                 applicationStatus:appliedJobStatusMap[jobIdStr] || null,
             };
         });

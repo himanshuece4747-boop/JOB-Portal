@@ -16,14 +16,14 @@ exports.updateProfile = async (req , res) => {
 
         //if employer, allow updating company info
         if (user.role === "employer") {
-            user.companyname = companyName || user.companyName;
-            user.comapnyDescription = companyDescription || user.companyDescription;
-            user.comapnyLogo = companyLogo || user.companyLogo;
+            user.companyName = companyName || user.companyName;
+            user.companyDescription = companyDescription || user.companyDescription;
+            user.companyLogo = companyLogo || user.companyLogo;
         }
         await user.save();
 
         res.json({
-            id:user._id,
+            _id:user._id,
             name:user.name,
             avatar:user.avatar,
             role:user.role,
@@ -60,6 +60,7 @@ exports.deleteResume = async (req , res) => {
         if(fs.existsSync(filePath)) {
             fs.unlinkSync(filePath); // Delete the file
         }
+        // set user's resume to an empty string
         user.resume = '';
         await user.save();
 

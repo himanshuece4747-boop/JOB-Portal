@@ -23,3 +23,11 @@ export const validateAvatar = (file) => {
     if(file.size > maxSize) return "File size must be less than 5MB";
     return "";
 };
+export const getInitials = (name) => {
+  return name
+    .split(" ")
+    .map((word) => word.charAt(0))
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
+};

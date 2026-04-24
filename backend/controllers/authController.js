@@ -13,7 +13,7 @@ const generateToken = (id) => {
 };
 
 // @desc Register new user
-exports.register = async (req, res) => {
+exports.register = async (req, res,next) => {
     try {
         const { name, email, password, avatar, role } = req.body;
 
@@ -62,7 +62,7 @@ exports.register = async (req, res) => {
 };
 
 // @desc Login user
-exports.login = async (req, res) => {
+exports.login = async (req, res,next) => {
     try {
         const { email, password } = req.body;
 
@@ -95,7 +95,7 @@ exports.login = async (req, res) => {
 };
 
 // @desc Get logged-in user
-exports.getMe = async (req, res) => {
+exports.getMe = async (req, res,next) => {
     if (!req.user) {
         return res.status(401).json({ message: "Not authenticated" });
     }
